@@ -1,7 +1,4 @@
 # Ex.No: 01A PLOT A TIME SERIES DATA
-# Name : MOHAMED SAUDH R
-# Reg no : 212225240085
-# Dept : AIML
 
 # AIM:
 To Develop a python program to Plot a time series data (population/ market price of a commodity
@@ -14,39 +11,76 @@ To Develop a python program to Plot a time series data (population/ market price
 5. Display the graph.
 # PROGRAM:
 
-```
+```python
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Load dataset
-df = pd.read_csv("/content/chennai_temperature_120days.csv")
+data = pd.read_csv("weatherHistory.csv")
+data['Formatted Date'] = pd.to_datetime(data['Formatted Date'], utc=True)
+data.set_index('Formatted Date', inplace=True)
 
-# Convert Date column
-df["Date"] = pd.to_datetime(df["Date"])
+print("Mean Temperature:", data['Temperature (C)'].mean())
+print("Mean Apparent Temperature:", data['Apparent Temperature (C)'].mean())
+print("Mean Humidity:", data['Humidity'].mean())
+print("Mean Wind Speed:", data['Wind Speed (km/h)'].mean())
 
-# Set index and sort
-df.set_index("Date", inplace=True)
-df = df.sort_index()
-
-# Plot (same style as your stock code)
 plt.figure(figsize=(12, 6))
+plt.plot(data['Temperature (C)'])
+plt.title('Temperature over Time')
+plt.xlabel('Date')
+plt.ylabel('Temperature (C)')
+plt.show()
 
-plt.plot(df.index, df["Avg_Temp_C"], linewidth=2, label="Average Temperature")
+plt.figure(figsize=(12, 6))
+plt.plot(data['Apparent Temperature (C)'])
+plt.title('Apparent Temperature over Time')
+plt.xlabel('Date')
+plt.ylabel('Apparent Temperature (C)')
+plt.show()
 
-plt.title("Chennai Average Temperature Over Time")
-plt.xlabel("Date")
-plt.ylabel("Average Temperature (C)")
-plt.grid(True)
-plt.legend()
+plt.figure(figsize=(12, 6))
+plt.plot(data['Humidity'])
+plt.title('Humidity over Time')
+plt.xlabel('Date')
+plt.ylabel('Humidity')
+plt.show()
 
-plt.xticks(rotation=45)
-plt.tight_layout()
+plt.figure(figsize=(12, 6))
+plt.plot(data['Wind Speed (km/h)'])
+plt.title('Wind Speed over Time')
+plt.xlabel('Date')
+plt.ylabel('Wind Speed (km/h)')
+plt.show()
+
+monthly_avg = data.resample('M').mean(numeric_only=True)
+plt.figure(figsize=(12, 6))
+plt.plot(monthly_avg['Temperature (C)'])
+plt.title('Average Monthly Temperature')
+plt.xlabel('Month')
+plt.ylabel('Temperature (C)')
+plt.show()
+
+yearly_avg = data.resample('Y').mean(numeric_only=True)
+plt.figure(figsize=(12, 6))
+plt.plot(yearly_avg['Temperature (C)'])
+plt.title('Average Yearly Temperature')
+plt.xlabel('Year')
+plt.ylabel('Temperature (C)')
 plt.show()
 ```
 
 # OUTPUT:
+<img width="1977" height="934" alt="image" src="https://github.com/user-attachments/assets/1e644ad1-aad9-475e-967e-7c804b1a7b6b" />
+<img width="1744" height="835" alt="image" src="https://github.com/user-attachments/assets/1e5a787f-483d-4585-9c8b-501768d4ad4c" />
+<img width="2092" height="819" alt="image" src="https://github.com/user-attachments/assets/ec0e6ce6-f532-4b75-bb45-cff3c9ca0034" />
+<img width="1759" height="826" alt="image" src="https://github.com/user-attachments/assets/84fdef92-8eef-4542-b41f-e4e3cd304991" />
+<img width="1651" height="877" alt="image" src="https://github.com/user-attachments/assets/55ea5666-8b1a-4857-9a76-6e4578fb65af" />
+<img width="1623" height="883" alt="image" src="https://github.com/user-attachments/assets/8a7a13ed-bc84-4787-802d-907417bbac61" />
 
-<img width="1205" height="593" alt="image" src="https://github.com/user-attachments/assets/0ae8e70b-278a-4b22-8bd7-c34f7cd91290" />
+
+
+
+
 
 
 # RESULT:
